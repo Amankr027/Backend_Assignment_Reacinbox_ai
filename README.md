@@ -1,30 +1,17 @@
+
 # ReachInBox Assignment
 
 ## Server
-The assignment is to build a tool that will parse and check the emails in a Google and Outlook email ID, and
-respond to the e-mails based on the context using AI. Use BullMQ as the tasks scheduler
-This is a server-based application built with Node.js and Express. It uses various packages such as  `openai` for AI functionalities, `googleapis` for Google APIs, and `axios` for HTTP requests and `bullMQ` to process queues.
-![image](https://github.com/shraddha-gawde/reachInbox-assignment/assets/101090200/0237adc4-c817-4d79-9b09-fc0b27f34e6e)
+The assignment is to build a tool that will parse and check emails in Google and Outlook accounts and respond to emails based on context using AI. It uses BullMQ as the task scheduler. This server-based application is built with Node.js and Express and utilizes packages like `openai` for AI functionalities, `googleapis` for Google APIs, `axios` for HTTP requests, and `bullMQ` to process queues.
 
-
-## deployed links :
-frontend : [Link](https://reach-inbox-assignment.vercel.app/)
-<br>
-Backend : [Link](https://reachinbox-assignment-4rf9.onrender.com)
-<br>
-API documentation build with postman documentation - [Link](https://documenter.getpostman.com/view/31971527/2sA35D43FE)
-<br>
-Video link for demo of this Application - [Link](https://www.loom.com/share/51a86498fb774c6ba1602c0a2625cebe?sid=bf5e9f0d-23f8-4d54-a89b-b0d3d3412c35)
-
-
-
-# technologies used:
+## Technologies Used
 - Node.js
 - Express.js
 - OpenAI
 - Google APIs
 - Microsoft Graph API
-# npm packages used
+
+## npm Packages Used
 - dotenv
 - Axios
 - bullMQ
@@ -33,89 +20,52 @@ Video link for demo of this Application - [Link](https://www.loom.com/share/51a8
 - @microsoft/microsoft-graph-client
 - @azure/msal-node
 
-<br>
-
-## Installation setup
-1. Clone the repository to your local machine
+## Installation Setup
+1. Clone the repository to your local machine.
 ```bash
-git clone https://github.com/shraddha-gawde/reachInbox-assignment.git
+git clone <repository-url>
 ```
-2. Navigate to the root directory of the project directory :
+2. Navigate to the root directory of the project:
 ```bash 
 cd server
 ```
-3. Run `npm install` to install all the dependencies
-4. Create a `.env` file in the root directory with the same IDs as specified in the documentation.
+3. Run `npm install` to install all dependencies.
+4. Create a `.env` file in the root directory with the necessary configurations.
 
-## Running the server
-1. To start the server, run the following command in your terminal
+## Running the Server
+1. To start the server, run:
 ```bash
 npm start
 ```
-*This will start the server at localhost:5000 (or whatever port you have specified).*
-or we can use backend deployed link also.
+*This will start the server at localhost:5000 (or another specified port).*
 
-2. To start the worker.js file, run the following command in your terminal
+2. To start the worker, run:
 ```bash
 npm run server
 ```
 
 ## API Endpoints
 
-### For Google's OAuth2.0:
-- `https://reachinbox-assignment-4rf9.onrender.com/auth/google` - GET for google authentication
-- `https://reachinbox-assignment-4rf9.onrender.com/api/mail/userInfo/:email` - GET request to view user profile
-- `https://reachinbox-assignment-4rf9.onrender.com/api/mail/allDrafts/:email` - GET request to view all drafts mail.
-- `https://reachinbox-assignment-4rf9.onrender.com/api/mail/read/:email/message/:message` - GET request to read a specific email(using id).
-- `https://reachinbox-assignment-4rf9.onrender.com/api/mail/list/:email` - GET request to get a list of mails.
-- `https://reachinbox-assignment-4rf9.onrender.com/api/mail/sendMail` - POST request send mail with label.
-```
-{
-    "from":"sendersmail@gmail.com",
-    "to":"recieversmail@gmail.com",
-    "label":"interested/not-interested/more-information"
-}
-```
-- `https://reachinbox-assignment-4rf9.onrender.com/api/mail/sendone/:id` - POST request to send a single mail for particular ID.
-```
-{
-    "from":"sendersmail@gmail.com",
-    "to":"recieversmail@gmail.com"
-}
-```
-- - `https://reachinbox-assignment-4rf9.onrender.com/api/mail/sendMultiple/:id` - POST request to send a single mail for particular ID.
- ```
-{
-    "from":"sendersmail@gmail.com",
-    "to":["demo@gmail.com","demo@gmail.com", "demo@gmail.com"]
-}
-```
-![image](https://github.com/shraddha-gawde/reachInbox-assignment/assets/101090200/e0bbbdce-1ec4-46c4-8335-e049f7f5b5c7)
+### Google OAuth2.0 Endpoints
+- `/auth/google` - Google authentication
+- `/api/mail/userInfo/:email` - Get user profile
+- `/api/mail/allDrafts/:email` - View all draft emails
+- `/api/mail/read/:email/message/:message` - Read a specific email
+- `/api/mail/list/:email` - Get a list of emails
+- `/api/mail/sendMail` - Send an email with a label
+- `/api/mail/sendone/:id` - Send a single email
+- `/api/mail/sendMultiple/:id` - Send multiple emails
 
-### For microsoft azur's OAuth2.0:
+### Microsoft Azure OAuth2.0 Endpoints
+- `/outlook/signin` - Microsoft Azure authentication for Outlook
+- `/outlook/callbak` - Get access token for Microsoft Azure
+- `/outlook/profile` - Get profile data for a user
+- `/outlook/all-Mails/{email}` - Get all emails of an Outlook user
+- `/outlook/{email}/read-Msg/{message}` - Read a particular email by message ID
+- `/outlook/{email}/send-Mail` - Send email using Outlook
+- `/outlook/sendone/:email/:id` - Send email using `bullmq`
 
-- `https://reachinbox-assignment-4rf9.onrender.com/outlook/signin` - GET for micosoft azur authentication for outlook
-- `https://reachinbox-assignment-4rf9.onrender.com/outlook/callbak` - GET for micosoft azur getting access token
-- `https://reachinbox-assignment-4rf9.onrender.com/outlook/profile` - GET request to get profile data for particular user
-- `https://reachinbox-assignment-4rf9.onrender.com/outlook/all-Mails/{email}` - GET request for get ist of all mails of outllok user
-- `https://reachinbox-assignment-4rf9.onrender.com/outlook/{email}/read-Msg/{:message}` = GET request to read partivcular mail using messange id
-- `https://reachinbox-assignment-4rf9.onrender.com/outlook/{email}/send-Mail` - post request for sending mail to another user using outlook
-```
-{
-    "from":"sendersmail@gmail.com",
-    "to":"recieversmail@gmail.com"
-     "label":"interested/not-interested/more-information"
-}
-```
-- `https://reachinbox-assignment-4rf9.onrender.com/outlook/sendone/:email/:id` - post request for sending mail to another user using outlook using `bullmq`
-```
-{
-    "from":"sendersmail@gmail.com",
-    "to":"recieversmail@gmail.com"
-}
-```
-
-## Sample .env sample:
+## Sample `.env` Configuration
 ```
 PORT = ***
 GOOGLE_CLIENT_ID = ***
